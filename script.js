@@ -21,6 +21,9 @@ window.addEventListener("DOMContentLoaded", async function () {
   let currentIndex = 0;
   let loaded = false;
   let locationConfirmed = false;
+  let locationChangeTimer = null;
+  let skuChangeTimer = null;
+  const changeValidationDelay = 2000;
 
   async function getSheetUrl() {
     try {
@@ -135,6 +138,16 @@ window.addEventListener("DOMContentLoaded", async function () {
     return true;
   }
 
+  function confirmLocationIfValid(showAlert = true) {
+    const valid = validateLocation(showAlert);
+    if (valid && !locationConfirmed) {
+      locationConfirmed = true;
+      itemContainer.style.display = "block";
+      nextBtn.textContent = currentIndex + 1 < currentOrderRows.length ? "Confirmar Item" : "Finalizar";
+    }
+    return valid;
+  }
+
   function showResultScreen(rows) {
     currentOrderRows = rows;
     currentIndex = 0;
@@ -196,18 +209,88 @@ window.addEventListener("DOMContentLoaded", async function () {
 
   searchBtn.addEventListener("click", searchOrder);
   nextBtn.addEventListener("click", nextItem);
+  const scheduleLocationValidation = () => {
+    if (locationChangeTimer) {
+      clearTimeout(locationChangeTimer);
+    }
+    locationChangeTimer = setTimeout(() => {
+      confirmLocationIfValid(false);
+      locationChangeTimer = null;
+    }, changeValidationDelay);
+  };
+
+  const scheduleSkuValidation = () => {
+    if (skuChangeTimer) {
+      clearTimeout(skuChangeTimer);
+    }
+    skuChangeTimer = setTimeout(() => {
+      validateItem(false);
+      skuChangeTimer = null;
+    }, changeValidationDelay);
+  };
+
+  const handleLocationKeydown = (event) => {
+    if (event.key === "Enter" || event.key === "Tab") {
+      if (!confirmLocationIfValid(true)) {
+        event.preventDefault();
+        resultLocation.focus();
+      }
+    }
+  };
+
+  const handleSkuKeydown = (event) => {
+    if (event.key === "Enter" || event.key === "Tab") {
+      if (!validateItem(true)) {
+        event.preventDefault();
+        resultSku.focus();
+      }
+    }
+  };
+
   resultLocation.addEventListener("input", () => {
+    setInputValidity(resultLocation, true);
     locationConfirmed = false;
     itemContainer.style.display = "none";
     nextBtn.textContent = "Confirmar Localização";
-    setInputValidity(resultLocation, true);
-    validateLocation(false);
+    scheduleLocationValidation();
   });
+  resultLocation.addEventListener("change", () => {
+    if (locationChangeTimer) {
+      clearTimeout(locationChangeTimer);
+      locationChangeTimer = null;
+    }
+    locationConfirmed = false;
+    itemContainer.style.display = "none";
+    nextBtn.textContent = "Confirmar Localização";
+    confirmLocationIfValid(true);
+  });
+  resultLocation.addEventListener("blur", () => {
+    if (!locationChangeTimer) {
+      scheduleLocationValidation();
+    }
+  });
+  resultLocation.addEventListener("keydown", handleLocationKeydown);
+
   resultSku.addEventListener("input", () => {
     setInputValidity(resultSku, true);
-    validateItem(false);
+    scheduleSkuValidation();
   });
-  // backBtn.addEventListener("click", showSearchScreen);
+  resultSku.addEventListener("change", () => {
+    if (skuChangeTimer) {
+      clearTimeout(skuChangeTimer);
+      skuChangeTimer = null;
+    }
+    validateItem(true);
+  });
+  resultSku.addEventListener("blur", () => {
+    if (!skuChangeTimer) {
+      scheduleSkuValidation();
+    }
+  });
+  resultSku.addEventListener("keydown", handleSkuKeydown);
+
+
+
   orderInput.addEventListener("keydown", (event) => {
     if (event.key === "Enter") {
       event.preventDefault();
