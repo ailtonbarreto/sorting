@@ -192,7 +192,7 @@ window.addEventListener("DOMContentLoaded", async function () {
       currentIndex += 1;
       updateResultScreen();
     } else {
-      showSuccessPopup("Todos os itens do pedido foram separados com sucesso.");
+      showSuccessPopup("Pedido separado com sucesso!");
     }
   }
 
