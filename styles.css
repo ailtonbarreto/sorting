@@ -227,3 +227,40 @@ code {
   transform: translateY(-1px);
   box-shadow: 0 16px 40px rgba(16, 185, 129, 0.25);
 }
+
+.popup-overlay {
+  position: fixed;
+  inset: 0;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  background: rgba(15, 23, 42, 0.72);
+  z-index: 30;
+}
+
+.popup-overlay.active {
+  display: flex;
+}
+
+.popup-card {
+  width: min(100%, 420px);
+  padding: 28px 24px;
+  border-radius: 28px;
+  background: #0f172a;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 36px 90px rgba(15, 23, 42, 0.32);
+  color: #f8fafc;
+  text-align: center;
+}
+
+.popup-card h2 {
+  margin: 0 0 16px;
+  font-size: 1.75rem;
+}
+
+.popup-card p {
+  margin: 0 0 24px;
+  line-height: 1.6;
+  color: #cbd5e1;
+}
+
