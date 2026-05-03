@@ -198,13 +198,8 @@ window.addEventListener("DOMContentLoaded", async function () {
 
   searchBtn.addEventListener("click", searchOrder);
   nextBtn.addEventListener("click", nextItem);
-  // backBtn.addEventListener("click", showSearchScreen);
-  orderInput.addEventListener("keydown", (event) => {
-    if (event.key === "Enter") {
-      event.preventDefault();
-      searchOrder();
-    }
-  });
+  
+  
 
   successPopupClose.addEventListener("click", hideSuccessPopup);
   successPopup.addEventListener("click", (event) => {
