@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tela Home - App Sorting</title>
+  <link rel="stylesheet" href="styles.css" />
+  <script src="script.js"></script>
+</head>
+<body class="home-screen">
+  <main class="home-container">
+    <section id="searchScreen" class="home-content">
+      <h1>Pedido</h1>
+      <input id="orderInput" type="text" placeholder="Digite o número do pedido" aria-label="Número do pedido" />
+      <button id="searchBtn" class="home-button">Separar</button>
+    </section>
+
+    <section id="resultScreen" class="home-content" style="display: none;">
+      <div style="display: grid; gap: 20px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; padding: 16px 18px; border-radius: 22px; background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255,255,255,0.14);">
+          <div>
+            <span style="color: #94a3b8; display: block; font-size: 0.95rem; margin-bottom: 6px;">Pedido</span>
+            <strong id="resultOrder" style="font-size: 1.4rem; color: white;">—</strong>
+          </div>
+          <span id="resultProgress" style="color: #f8fafc; font-size: 1rem;">0/0</span>
+        </div>
+
+        <div>
+          <span style="display: block; color: #94a3b8; font-size: 0.95rem; margin-bottom: 10px;">Localização</span>
+          <input id="resultLocation" type="text" placeholder="Carregando localização..." autocomplete="off" />
+        </div>
+
+        <div id="itemContainer" style="display: none;">
+          <span style="display: block; color: #94a3b8; font-size: 0.95rem; margin-bottom: 10px;">Item</span>
+          <input id="resultSku" type="text" placeholder="Carregando item..." autocomplete="off" />
+        </div>
+
+        <button id="nextBtn" class="home-button">Separar</button>
+        <button id="backBtn" class="btn btn-secondary">Voltar</button>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
