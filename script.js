@@ -70,6 +70,11 @@ window.addEventListener("DOMContentLoaded", async function () {
     return String(value || "").trim().toUpperCase();
   }
 
+  function setInputValidity(input, isValid) {
+    input.classList.toggle("valid", isValid);
+    input.classList.toggle("invalid", !isValid);
+  }
+
   function findOrderRows(orderNumber) {
     const normalizedOrder = normalize(orderNumber);
     return tableData.filter((row) => normalize(row[orderKey]) === normalizedOrder);
@@ -88,39 +93,45 @@ window.addEventListener("DOMContentLoaded", async function () {
     nextBtn.textContent = "Confirmar Localização";
   }
 
-  function validateLocation() {
+  function validateLocation(showAlert = true) {
     const row = currentOrderRows[currentIndex];
     const enteredLocation = normalize(resultLocation.value);
     const expectedLocation = normalize(row[locationKey]);
 
     if (!enteredLocation) {
-      alert("Preencha a localização para confirmar.");
+      setInputValidity(resultLocation, false);
+      if (showAlert) alert("Preencha a localização para confirmar.");
       return false;
     }
 
     if (enteredLocation !== expectedLocation) {
-      alert("Localização incorreta. Verifique e tente novamente.");
+      setInputValidity(resultLocation, false);
+      if (showAlert) alert("Localização incorreta. Verifique e tente novamente.");
       return false;
     }
 
+    setInputValidity(resultLocation, true);
     return true;
   }
 
-  function validateItem() {
+  function validateItem(showAlert = true) {
     const row = currentOrderRows[currentIndex];
     const enteredSku = normalize(resultSku.value);
     const expectedSku = normalize(row[skuKey]);
 
     if (!enteredSku) {
-      alert("Preencha o item para confirmar.");
+      setInputValidity(resultSku, false);
+      if (showAlert) alert("Preencha o item para confirmar.");
       return false;
     }
 
     if (enteredSku !== expectedSku) {
-      alert("Item incorreto. Verifique e tente novamente.");
+      setInputValidity(resultSku, false);
+      if (showAlert) alert("Item incorreto. Verifique e tente novamente.");
       return false;
     }
 
+    setInputValidity(resultSku, true);
     return true;
   }
 
@@ -185,6 +196,17 @@ window.addEventListener("DOMContentLoaded", async function () {
 
   searchBtn.addEventListener("click", searchOrder);
   nextBtn.addEventListener("click", nextItem);
+  resultLocation.addEventListener("input", () => {
+    locationConfirmed = false;
+    itemContainer.style.display = "none";
+    nextBtn.textContent = "Confirmar Localização";
+    setInputValidity(resultLocation, true);
+    validateLocation(false);
+  });
+  resultSku.addEventListener("input", () => {
+    setInputValidity(resultSku, true);
+    validateItem(false);
+  });
   // backBtn.addEventListener("click", showSearchScreen);
   orderInput.addEventListener("keydown", (event) => {
     if (event.key === "Enter") {

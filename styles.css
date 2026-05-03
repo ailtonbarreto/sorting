@@ -197,6 +197,14 @@ code {
   box-shadow: inset 0 1px 3px rgba(15, 23, 42, 0.12);
 }
 
+.home-content input.valid {
+  box-shadow: inset 0 1px 3px rgba(15, 23, 42, 0.12), 0 0 0 2px rgba(16, 185, 129, 0.35);
+}
+
+.home-content input.invalid {
+  box-shadow: inset 0 1px 3px rgba(15, 23, 42, 0.12), 0 0 0 2px rgba(248, 113, 113, 0.35);
+}
+
 .home-content input::placeholder {
   color: #94a3b8;
 }
