@@ -89,6 +89,7 @@ window.addEventListener("DOMContentLoaded", async function () {
     itemContainer.style.display = "none";
     locationConfirmed = false;
     nextBtn.textContent = "Confirmar Localização";
+    resultLocation.focus();
   }
 
   function validateLocation() {
@@ -125,6 +126,29 @@ window.addEventListener("DOMContentLoaded", async function () {
     }
 
     return true;
+  }
+
+  function confirmLocation() {
+    if (!validateLocation()) {
+      return;
+    }
+    locationConfirmed = true;
+    itemContainer.style.display = "block";
+    nextBtn.textContent = currentIndex + 1 < currentOrderRows.length ? "Confirmar Item" : "Finalizar";
+    resultSku.focus();
+  }
+
+  function confirmItem() {
+    if (!validateItem()) {
+      return;
+    }
+
+    if (currentIndex + 1 < currentOrderRows.length) {
+      currentIndex += 1;
+      updateResultScreen();
+    } else {
+      showSuccessPopup("Pedido separado com sucesso!");
+    }
   }
 
   function showResultScreen(rows) {
@@ -175,31 +199,27 @@ window.addEventListener("DOMContentLoaded", async function () {
 
   function nextItem() {
     if (!locationConfirmed) {
-      if (!validateLocation()) {
-        return;
-      }
-      locationConfirmed = true;
-      itemContainer.style.display = "block";
-      nextBtn.textContent = currentIndex + 1 < currentOrderRows.length ? "Confirmar Item" : "Finalizar";
+      confirmLocation();
       return;
     }
 
-    if (!validateItem()) {
-      return;
-    }
-
-    if (currentIndex + 1 < currentOrderRows.length) {
-      currentIndex += 1;
-      updateResultScreen();
-    } else {
-      showSuccessPopup("Pedido separado com sucesso!");
-    }
+    confirmItem();
   }
 
   searchBtn.addEventListener("click", searchOrder);
   nextBtn.addEventListener("click", nextItem);
   
-  
+  resultLocation.addEventListener("keydown", function(event) {
+    if (event.key === "Enter" && !locationConfirmed) {
+      confirmLocation();
+    }
+  });
+
+  resultSku.addEventListener("keydown", function(event) {
+    if (event.key === "Enter" && locationConfirmed) {
+      confirmItem();
+    }
+  });
 
   successPopupClose.addEventListener("click", hideSuccessPopup);
   successPopup.addEventListener("click", (event) => {
