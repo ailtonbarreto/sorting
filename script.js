@@ -229,5 +229,6 @@ window.addEventListener("DOMContentLoaded", async function () {
     }
   });
 
+  orderInput.focus();
   await loadExcelData();
 });
