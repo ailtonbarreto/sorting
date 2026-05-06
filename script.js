@@ -154,9 +154,10 @@ window.addEventListener("DOMContentLoaded", async function () {
   function showResultScreen(rows) {
     currentOrderRows = rows;
     currentIndex = 0;
-    updateResultScreen();
     searchScreen.style.display = "none";
     resultScreen.style.display = "block";
+    updateResultScreen();
+    resultLocation.focus();
   }
 
   function showSuccessPopup(message) {
