@@ -14,6 +14,10 @@ window.addEventListener("DOMContentLoaded", async function () {
   const successPopupMessage = document.getElementById("successPopupMessage");
   const successPopupClose = document.getElementById("successPopupClose");
 
+  const errorPopup = document.getElementById("errorPopup");
+  const errorPopupMessage = document.getElementById("errorPopupMessage");
+  const errorPopupClose = document.getElementById("errorPopupClose");
+
   const orderKey = "PEDIDO";
   const skuKey = "SKU";
   const locationKey = "LOCALIZACAO";
@@ -92,23 +96,42 @@ window.addEventListener("DOMContentLoaded", async function () {
     resultLocation.focus();
   }
 
+  function showErrorPopup(message) {
+    errorPopupMessage.textContent = message;
+    errorPopup.classList.add("active");
+    errorPopup.setAttribute("aria-hidden", "false");
+  }
+
+  function hideErrorPopup() {
+    errorPopup.classList.remove("active");
+    errorPopup.setAttribute("aria-hidden", "true");
+  }
+
   function validateLocation() {
     const row = currentOrderRows[currentIndex];
     const enteredLocation = normalize(resultLocation.value);
     const expectedLocation = normalize(row[locationKey]);
 
     if (!enteredLocation) {
-      alert("Preencha a localização para confirmar.");
+      showErrorPopup("Preencha a localização para confirmar.");
       return false;
     }
 
     if (enteredLocation !== expectedLocation) {
-      alert("Localização incorreta. Verifique e tente novamente.");
+      showErrorPopup("Localização incorreta. Verifique e tente novamente.");
       return false;
     }
 
     return true;
   }
+
+  errorPopupClose.addEventListener("click", hideErrorPopup);
+
+  errorPopup.addEventListener("click", (event) => {
+    if (event.target === errorPopup) {
+      hideErrorPopup();
+    }
+  });
 
   function validateItem() {
     const row = currentOrderRows[currentIndex];
@@ -209,14 +232,14 @@ window.addEventListener("DOMContentLoaded", async function () {
 
   searchBtn.addEventListener("click", searchOrder);
   nextBtn.addEventListener("click", nextItem);
-  
-  resultLocation.addEventListener("keydown", function(event) {
+
+  resultLocation.addEventListener("keydown", function (event) {
     if (event.key === "Enter" && !locationConfirmed) {
       confirmLocation();
     }
   });
 
-  resultSku.addEventListener("keydown", function(event) {
+  resultSku.addEventListener("keydown", function (event) {
     if (event.key === "Enter" && locationConfirmed) {
       confirmItem();
     }
