@@ -119,6 +119,8 @@ window.addEventListener("DOMContentLoaded", async function () {
 
     if (enteredLocation !== expectedLocation) {
       showErrorPopup("Localização incorreta. Verifique e tente novamente.");
+      resultLocation.value = "";
+      resultLocation.focus();
       return false;
     }
 
