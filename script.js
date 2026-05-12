@@ -308,7 +308,10 @@ window.addEventListener("DOMContentLoaded", async function () {
     const rows = findOrderRows(orderNumber);
 
     if (rows.length === 0) {
-      alert("Pedido não encontrado.");
+      showErrorPopup(
+        "Pedido não encontrado!"
+      );
+      orderInput.value = "";
       return;
     }
 
