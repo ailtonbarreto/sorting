@@ -198,10 +198,10 @@ window.addEventListener("DOMContentLoaded", async function () {
 
     const expectedLocation = normalize(row[locationKey]);
 
-    if (!enteredLocation) {
-      showErrorPopup("Preencha a localização para confirmar.");
-      return false;
-    }
+    // if (!enteredLocation) {
+    //   showErrorPopup("Preencha a localização para confirmar.");
+    //   return false;
+    // }
 
     if (enteredLocation !== expectedLocation) {
 
@@ -224,10 +224,10 @@ window.addEventListener("DOMContentLoaded", async function () {
 
     const expectedSku = normalize(row[skuKey]);
 
-    if (!enteredSku) {
-      showErrorPopup("Preencha o item para confirmar.");
-      return false;
-    }
+    // if (!enteredSku) {
+    //   showErrorPopup("Preencha o item para confirmar.");
+    //   return false;
+    // }
 
     if (enteredSku !== expectedSku) {
 
