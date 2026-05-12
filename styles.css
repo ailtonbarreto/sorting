@@ -184,6 +184,10 @@ code {
   font-size: 16px;
 }
 
+#cls_icon{
+  font-size: 25vw;
+}
+
 /* ----------------------------------------------------- */
 
 @media (max-width: 600px) {

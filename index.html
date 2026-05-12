@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>App Sorting</title>
   <link rel="shortcut icon" href="./tag.png" type="image/x-icon">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
   <script src="script.js"></script>
 </head>
@@ -15,6 +16,7 @@
 
     <div id="errorPopup" class="popup" aria-hidden="true">
       <div class="popup-content">
+        <span class="material-symbols-outlined" id="cls_icon">close</span>
         <p id="errorPopupMessage"></p>
         <button id="errorPopupClose">OK</button>
       </div>
@@ -55,7 +57,7 @@
       <div class="popup-card" role="dialog" aria-modal="true" aria-labelledby="successPopupTitle">
         <h2 id="successPopupTitle">Pedido concluído</h2>
         <p id="successPopupMessage">Todos os itens foram separados com sucesso.</p>
-        <button id="successPopupClose" class="home-button">Fechar</button>
+        <button id="successPopupClose" class="home-button">OK</button>
       </div>
     </div>
   </main>
