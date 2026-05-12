@@ -148,20 +148,32 @@ window.addEventListener("DOMContentLoaded", async function () {
   }
 
   function hideErrorPopup() {
-    errorPopup.classList.remove("active");
 
-    errorPopup.setAttribute("aria-hidden", "true");
+  errorPopup.classList.remove("active");
 
-    setTimeout(() => {
+  errorPopup.setAttribute("aria-hidden", "true");
 
-      if (!locationConfirmed) {
-        resultLocation.focus();
-      } else {
-        resultSku.focus();
-      }
+  setTimeout(() => {
 
-    }, 10);
-  }
+    // Tela de busca
+    if (searchScreen.style.display !== "none") {
+
+      orderInput.focus();
+      return;
+    }
+
+    // Tela de separação
+    if (!locationConfirmed) {
+
+      resultLocation.focus();
+
+    } else {
+
+      resultSku.focus();
+    }
+
+  }, 50);
+}
 
   function showSuccessPopup(message) {
     successPopupMessage.textContent = message;
@@ -312,6 +324,7 @@ window.addEventListener("DOMContentLoaded", async function () {
         "Pedido não encontrado!"
       );
       orderInput.value = "";
+      orderInput.focus();
       return;
     }
 
